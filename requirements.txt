@@ -1,2 +1,3 @@
-python
-pytest
+python-dateutil==3.10.10
+
+pytest==7.2.0
