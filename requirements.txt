@@ -1,2 +1,2 @@
-setup-python
-pip install -r
+pip install python
+pip install pytest
