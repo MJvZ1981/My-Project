@@ -24,7 +24,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 80
         script: |
-          cd /var/www/my-project/
-          git pull origin master
+          cd /var/www/My-Project/
+          git pull origin main
           git status
           npm install --only=prod
