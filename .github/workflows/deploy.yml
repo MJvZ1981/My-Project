@@ -1,28 +1,32 @@
-name: Deploy
+name: Continuous Deployment
 
-# Controls when the action will run
 on:
-  # Triggers the workflow on push or pull request events, but only for the master branch
   push:
     branches: [ main ]
-    
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  deploy:
     runs-on: ubuntu-latest
- 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    
     steps:
-    - name: Deploy using ssh
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential
+        sudo apt-get install -y python3-pip
+        pip3 install -r requirements.txt
+
+    - name: Deploy to DigitalOcean
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: 80
+        host: ${{ secrets.DROPLET_IP }}
+        username: ${{ secrets.DROPLET_USER }}
+        password: ${{ secrets.DROPLET_PASSWORD }}
+        port: ${{ secrets.DROPLET_SSH_PORT }}
         script: |
-          cd /var/www/My-Project/
-          git checkout .
-          git pull
+          cd /var/www/html
+          git pull origin main
+          sudo service nginx restart
