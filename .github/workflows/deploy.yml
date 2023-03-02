@@ -25,6 +25,6 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         script: |
           cd /var/www/my-project/
-          git pull origin production
+          git pull origin main
           git status
           npm install --only=prod
