@@ -1,28 +1,22 @@
 name: CD pipeline
-
 on:
   push:
     branches:
       - main
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      
-      - name: Setup Node.js v16
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16.x'
-          
       - name: Install dependencies
-        run: npm ci
-      
-      - name: Build app
-        run: npm run build
-
+        run: |
+          sudo apt-get update
+          sudo apt-get install python3-pip -y
+          sudo apt-get install python3-venv -y
+          python3 -m venv venv
+          source venv/bin/activate
+          pip3 install -r requirements.txt
       - name: Deploy to DigitalOcean
         uses: appleboy/ssh-action@master
         with:
@@ -33,4 +27,11 @@ jobs:
           script: |
             cd /var/www/My-Project
             git pull origin main
+            source venv/bin/activate
+            flask db upgrade
+            sudo systemctl restart myapp.service
             sudo service nginx restart
+
+      
+            
+            
