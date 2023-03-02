@@ -25,8 +25,8 @@ jobs:
         host: ${{ secrets.DROPLET_IP }}
         username: ${{ secrets.DROPLET_USER }}
         password: ${{ secrets.DROPLET_PASSWORD }}
-        port: ${{ secrets.DROPLET_SSH_PORT }}
+        port: ${{ secrets.DROPLET_PORT }}
         script: |
-          cd /var/www/html
+          cd /var/www/My-Project
           git pull origin main
           sudo service nginx restart
