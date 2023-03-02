@@ -21,10 +21,10 @@ jobs:
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 80
-        key: ${{ secrets.SSH_KEY }}
         script: |
           cd /var/www/my-project/
-          git pull origin main
+          git pull origin master
           git status
           npm install --only=prod
