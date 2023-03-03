@@ -20,7 +20,6 @@ jobs:
           script: |
             cd /var/www/My_Project
             git pull origin main
-            source venv/bin/activate
             flask db upgrade
             sudo systemctl restart myapp.service
             sudo service nginx restart
