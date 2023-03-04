@@ -18,8 +18,7 @@ jobs:
           password: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.DROPLET_PORT }}
           script: |
-            cd /var/www/My_Project
-            git pull
+            deploy.sh
 
       
             
