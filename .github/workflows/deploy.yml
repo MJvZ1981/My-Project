@@ -13,6 +13,7 @@ jobs:
       - name: Deploy to DigitalOcean
         uses: appleboy/ssh-action@master
         with:
+          key: ${{ secrets.OCEAN_KEY }}
           host: ${{ secrets.DROPLET_IP }}
           username: ${{ secrets.DROPLET_USER }}
           password: ${{ secrets.SSH_PRIVATE_KEY }}
