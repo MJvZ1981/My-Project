@@ -19,10 +19,7 @@ jobs:
           port: ${{ secrets.DROPLET_PORT }}
           script: |
             cd /var/www/My_Project
-            git pull origin main
-            flask db upgrade
-            sudo systemctl restart myapp.service
-            sudo service nginx restart
+            git pull
 
       
             
