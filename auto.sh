@@ -11,8 +11,8 @@ function auto() {
   git commit -m "$1"
 
   # Pull changes from remote repository
-  git pull origin main
+  git pull
 
   # Push changes to remote repository
-  git push origin main
+  git push
 }
