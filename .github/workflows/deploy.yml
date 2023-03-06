@@ -1,4 +1,4 @@
-name: CD pipeline
+name: My Pipeline
 on:
   push:
     branches:
@@ -7,18 +7,26 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Start SSH Agent
+      run: |
+        source ~/.bashrc
+        start_ssh_agent
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Deploy code
+      run: |
+        rsync -r --delete-after --quiet $GITHUB_WORKSPACE /var/www/My_Project
         
-      - name: Deploy to DigitalOcean
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.DROPLET_IP }}
-          username: ${{ secrets.DROPLET_USER }}
-          password: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.DROPLET_PORT }}
-          script: |
-            pull
+    - name: Deploy to DigitalOcean
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.DROPLET_IP }}
+        username: ${{ secrets.DROPLET_USER }}
+        password: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.DROPLET_PORT }}
+        script: |
+          cd /var/www/My_Project
+          git pull origin main
 
       
             
