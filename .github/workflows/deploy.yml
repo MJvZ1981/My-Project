@@ -1,30 +1,29 @@
-name: Deploy to Ubuntu Server
+name: Deploy to droplet
+
 on:
   push:
-    branches: [main]
-
-env:
-  SSH_HOST: ${{ secrets.SSH_HOST }}
-  SSH_PORT: ${{ secrets.SSH_PORT }}
-  SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
-  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Set up SSH agent
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_auth_sock
+      run: |
+        eval "$(ssh-agent -s)"
+        ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+    - name: SSH into droplet
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
+          cd /var/www/My_Project
+          git pull origin main
 
-      - name: Start SSH agent and add key
-        run: |
-          echo "${SSH_PRIVATE_KEY}" > ~/.ssh/droplet
-          chmod 600 ~/.ssh/droplet
-          eval "$(ssh-agent -s)"
-          ssh-add ~/.ssh/droplet
-
-      - name: Git pull from remote server
-        run: ssh ${SSH_USERNAME}@${SSH_HOST} -p ${SSH_PORT} 'cd /var/www/My_Project && git pull'
-
-            
             
