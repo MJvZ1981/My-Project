@@ -1,8 +1,14 @@
-name: My Pipeline
+name: Deploy to Ubuntu Server
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+
+env:
+  SSH_HOST: ${{ secrets.HOST }}
+  SSH_PORT: ${{ secrets.PORT }}
+  SSH_USERNAME: ${{ secrets.USERNAME }}
+  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -10,27 +16,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Start SSH agent and add private key
+      - name: Start SSH agent and add key
         run: |
-          function start_agent {
-              eval "$(ssh-agent -s)"
-              ssh-add ~/.ssh/droplet
-          }
-          if [[ ! $(pgrep ssh-agent) ]]; then
-              start_agent
-          fi
+          echo "${SSH_PRIVATE_KEY}" > ~/.ssh/droplet
+          chmod 600 ~/.ssh/droplet
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/droplet
 
-      - name: Deploy to DigitalOcean
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.DROPLET_IP }}
-          username: ${{ secrets.DROPLET_USER }}
-          password: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.DROPLET_PORT }}
-          script: |
-            cd /var/www/My_Project
-            git pull origin main
+      - name: Git pull from remote server
+        run: ssh ${SSH_USERNAME}@${SSH_HOST} -p ${SSH_PORT} 'cd /var/www/My_Project && git pull'
 
-      
             
             
