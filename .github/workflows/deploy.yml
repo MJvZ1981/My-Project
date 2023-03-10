@@ -12,13 +12,11 @@ jobs:
     - name: SSH into droplet
       uses: appleboy/ssh-action@master
       with:
-        script_stop: true
         host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
+        username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.SSH_PORT }}
         script: |
-          whoami
           cd /var/www/My_Project
           git pull origin main
 
