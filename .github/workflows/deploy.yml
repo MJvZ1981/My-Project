@@ -17,7 +17,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.SSH_PORT }}
         script: |
-          cd /var/www/My_Project
+          cd /github/My_Project
           git pull origin main
 
             
