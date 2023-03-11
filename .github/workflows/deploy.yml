@@ -28,7 +28,9 @@ jobs:
         script: |
           cd /github/My_Project
           git pull origin main
-          gunicorn main:app -b 0.0.0.0:8001
+          sudo fuser -k 8000/tcp
+          gunicorn main:app -b 0.0.0.0:8000
+          
 
 
             
