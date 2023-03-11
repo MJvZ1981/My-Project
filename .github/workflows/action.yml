@@ -1,0 +1,19 @@
+name: My Workflow
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run tests
+      run: |
+        # command to run tests
+
+    - name: SSH into droplet
+      if: success()
+      run: |
+        # command to SSH into droplet
