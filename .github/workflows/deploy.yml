@@ -28,7 +28,7 @@ jobs:
         script: |
           cd /github/My_Project
           git pull origin main
-          sudo fuser -k 8000/tcp
+          lsof -ti tcp:8000 | xargs kill
           gunicorn main:app -b 0.0.0.0:8000
           
 
