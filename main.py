@@ -7,7 +7,7 @@ app = Flask(__name__)
 # Assign a function to be called when the path `/` is requested
 @app.route('/')
 def index():
-    return 'Hello, world!'
+    return 'Hello, world! This is my awesome Flask app (ehhhhmmmmm, right....?)'
 
 @app.route('/cow')
 def cow():
