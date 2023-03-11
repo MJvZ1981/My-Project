@@ -28,7 +28,7 @@ jobs:
         script: |
           cd /github/My_Project
           git pull origin main
-          gunicorn main:app -b ${{ secrets.SSH_HOST }}:22
+          gunicorn main:app -b 0.0.0.0:8080
 
 
             
