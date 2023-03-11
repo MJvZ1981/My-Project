@@ -28,6 +28,6 @@ jobs:
         script: |
           cd /github/My_Project
           git pull origin main
-          run: gunicorn app:main
+          gunicorn main:app
 
             
