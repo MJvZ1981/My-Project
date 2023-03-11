@@ -28,6 +28,6 @@ jobs:
         script: |
           cd /github/My_Project
           git pull origin main
-          gunicorn main:app
+          gunicorn main:app -b 0.0.0.0
 
             
