@@ -16,7 +16,7 @@ jobs:
     - name: Install Dependencies
       run: pip install -r requirements.txt
     - name: Run tests
-      run: pytest
+      run: python -m pytest
 
     - name: SSH into droplet
       uses: appleboy/ssh-action@master
