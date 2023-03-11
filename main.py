@@ -1,15 +1,17 @@
-# Import what we need from flask
-from flask import Flask
+import os
 
-# Create a Flask app inside `app`
+from flask import Flask, redirect, render_template, request, session, url_for
+
+
 app = Flask(__name__)
 
-# Assign a function to be called when the path `/` is requested
-@app.route('/')
+
+
+@app.route("/home")
+def redirect_index():
+    return redirect(url_for("index"))
+
+
+@app.route("/")
 def index():
-    return 'Hello, world! This is my awesome Flask app (ehhhhmmmmm, right....?)'
-
-@app.route('/cow')
-def cow():
-    return 'MOoooOoOOOOooooOOOOOOOOO!'
-
+    return render_template("index.html", title="Index")
