@@ -29,6 +29,13 @@ jobs:
           cd /github/My_Project
           git pull origin main
           gunicorn main:app -b 0.0.0.0:8001
+          
+          - name: Wait for server to start
+            run: sleep 3s
+
+          # Stop the running Gunicorn process
+          - name: Stop server
+            run: pkill gunicorn
 
 
             
