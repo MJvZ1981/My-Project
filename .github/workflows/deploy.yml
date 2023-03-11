@@ -11,14 +11,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install dependencies
-      run: |
-        npm install
-
     - name: Run tests
       run: |
-        # run the tests using the run_tests.yml file
-        npm test -- --config run_tests.yml
+        pip install -r requirements.txt
+        pytest -c pytest.ini -v run_tests.yml
 
     - name: SSH into droplet
       uses: appleboy/ssh-action@master
