@@ -6,7 +6,32 @@ Components I used to get the continuous deployment done are:
 
 3) The point I struggled with the most was adding the right private key to the github secrets. I didn't use the one I had on my local machine, but after I did everything worked like supposed to. My script from the deploy.yml initiated after a push. And after a git push command from my local machine it triggered the jobs. And finally the appleboy/ssh-action@master command in the deploy.yml pulled through and my vps allowed the git pull command from the right directory (the one I initially cloned).
 
-4) I also used the touch command a lot to create a file to see if everything worked properly. Like: touch push.txt followed by echo "push it" >> push.txt and my auto push command, since I created a shell script with a function for auto pushes:
+4) Added a service file (app.service) with the following lines of code:
+
+[Unit]
+# This could be anything that helps you and colleagues know what this
+# service is for.
+Description=app gunicorn daemon
+# This tells systemd when this application is ready to start
+After=network.target
+
+[Service]
+Type=notify
+DynamicUser=yes
+RuntimeDirectory=app
+# Where the command supplied in ExecStart be run
+WorkingDirectory=/github/My_Project/
+ExecStart=/usr/bin/gunicorn main:app
+ExecReload=/bin/kill -s HUP $MAINPID
+Restart=on-failure
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+ 
+5) I also used the touch command a lot to create a file to see if everything worked properly. Like: touch push.txt followed by echo "push it" >> push.txt and my auto push command, since I created a shell script with a function for auto pushes:
 function auto() {
   if [ -z "$1" ]; then
     echo "Please provide a commit message"
@@ -32,4 +57,3 @@ function hi() {
   cd /path/to/directory
 }
 
-                             
