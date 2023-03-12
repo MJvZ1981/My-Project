@@ -32,9 +32,6 @@ jobs:
         script: |
           cd /github/My_Project
           git pull origin main
-          gunicorn main:app -b 0.0.0.0:8000
-          cd /github/My_Project
-          git pull origin main
           systemctl restart myapplication
 
           
