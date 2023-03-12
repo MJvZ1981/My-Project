@@ -9,17 +9,17 @@ Components I used to get the continuous deployment done are:
 4) Added a service file (app.service) with the following lines of code:
 
 [Unit]
-'''This could be anything that helps you and colleagues know what this'''
-'''service is for.'''
+```This could be anything that helps you and colleagues know what this```
+```service is for.```
 Description=app gunicorn daemon
-'''This tells systemd when this application is ready to start'''
+```This tells systemd when this application is ready to start```
 After=network.target
 
 [Service]
 Type=notify
 DynamicUser=yes
 RuntimeDirectory=app
-'''Where the command supplied in ExecStart be run'''
+```Where the command supplied in ExecStart be run```
 WorkingDirectory=/github/My_Project/
 ExecStart=/usr/bin/gunicorn main:app
 ExecReload=/bin/kill -s HUP $MAINPID
@@ -38,16 +38,16 @@ function auto() {
     return 1
   fi
 
-  '''Add all changes'''
+  ```Add all changes```
   git add .
 
-  '''Commit changes with message provided as argument'''
+  ```Commit changes with message provided as argument```
   git commit -m "$1"
 
-  '''Pull changes from remote repository'''
+  ```Pull changes from remote repository```
   git pull
 
-  '''Push changes to remote repository'''
+  ```Push changes to remote repository```
   git push
 }
 with an error if no argument is given
