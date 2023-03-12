@@ -9,7 +9,7 @@ I also gave the ~/.ssh directory the right permissions and the authorized_keys f
 ## My struggle:
 I didn't use the one I had on my local machine, but after I did everything worked like supposed to. My script from the deploy.yml initiated after a push. And after a git push command from my local machine it triggered the jobs. And finally the appleboy/ssh-action@master command in the deploy.yml pulled through and my vps allowed the git pull command from the right directory (the one I initially cloned).
 
-## Additional:
+## My service file:
 
 ```
 [Unit]
@@ -60,9 +60,12 @@ function auto() {
   git push
 }
 ```
-with an error if no argument is given
 
-This as one of the fun parts (finding out about these shell scripts. I also created scripts to get me in the right directory at once:
+> also giving an error if no argument is given.
+
+> This, to me, was one of the fun parts (finding out about these shell scripts). 
+> I also created scripts to get me in the right directory at once:
+
 ```
 function hi() {
   cd /path/to/directory
