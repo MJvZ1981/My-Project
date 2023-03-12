@@ -28,7 +28,6 @@ jobs:
         script: |
           cd /github/My_Project
           git pull origin main
-          lsof -ti tcp:8000 | xargs kill
           gunicorn main:app -b 0.0.0.0:8000
           pkill gunicorn
 
