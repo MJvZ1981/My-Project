@@ -9,8 +9,7 @@ Components I used to get the continuous deployment done are:
 4) Added a service file (app.service) with the following lines of code:
 
 [Unit]
-```This could be anything that helps you and colleagues know what this```
-```service is for.```
+```This could be anything that helps you and colleagues know what this service is for.```
 Description=app gunicorn daemon
 ```This tells systemd when this application is ready to start```
 After=network.target
