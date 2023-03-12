@@ -34,7 +34,6 @@ PrivateTmp=true
 [Install]
 WantedBy=multi-user.target
 ```
-
 ## Bash:
 
 I used the touch command a lot to create a file to see if everything worked properly. Like: `touch push.txt` followed by `echo "push it" >> push.txt` and my auto push command, since I created a shell script with a function for auto pushes:
