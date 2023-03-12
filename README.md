@@ -1,15 +1,15 @@
 Components I used to get the continuous deployment done are:
 
-## setting up the droplet.
+## Setting up the droplet:
 When set up, I made sure I could log into my VPS by SSH. In order to do so I created a SSH-key and used the "ssh-copy-id -i ~/.ssh/mykey root@ip_adress" command. When logging into the droplet (using the ssh root@ip_adress command) I accpted the fingerprint, entered the password and from then on was able to enter my vps simply by typing vps (since I created a shellsript for this and added this to my ~/.bashrc file using source vps.sh). I also noticed these setting can be changed by manually entering the sshd_config file and/or adding your ssh-key to the authorized_keys (cat /path/to/file >> ~/.ssh/authorized_keys)
 
-## after this I started cloning my github repo onto my local (and later on the droplet).
+## Cloning my github repo:
 I also gave the ~/.ssh directory the right permissions and the authorized_keys file (chmod 700 ~/.ssh/ and chmod 600 ~/.ssh/authorized_keys), added github to the known_hosts and set up the secrets. I added my public key to my github settings (added the SSH_key) and from then on was able to push files from my local machine into the repo.
 
-## The point I struggled with the most was adding the right private key to the github secrets.
+## My struggle:
 I didn't use the one I had on my local machine, but after I did everything worked like supposed to. My script from the deploy.yml initiated after a push. And after a git push command from my local machine it triggered the jobs. And finally the appleboy/ssh-action@master command in the deploy.yml pulled through and my vps allowed the git pull command from the right directory (the one I initially cloned).
 
-## Added a service file (app.service) with the following lines of code:
+## Additional:
 
 ```
 [Unit]
@@ -35,7 +35,11 @@ PrivateTmp=true
 WantedBy=multi-user.target
 ```
 
-## I also used the touch command a lot to create a file to see if everything worked properly. Like: `touch push.txt` followed by `echo "push it" >> push.txt` and my auto push command, since I created a shell script with a function for auto pushes:
+## Bash:
+
+> I used the touch command a lot to create a file to see if everything worked properly. Like: `touch push.txt` followed by `echo "push it" >> push.txt` and my auto 
+> push command, since I created a shell script with a function for auto pushes:
+
 ```
 function auto() {
   if [ -z "$1" ]; then
