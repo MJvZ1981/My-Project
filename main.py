@@ -1,7 +1,11 @@
+import os
 from flask import Flask, redirect, render_template, request, session, url_for
-
+from helpers import get_users, hash_password
 
 app = Flask(__name__)
+
+app.secret_key = os.urandom(16)
+
 
 
 @app.route("/home")
